@@ -73,6 +73,7 @@ router.post('/', function(req, res) {
 
 
 router.delete('/:id', function(req, res) {
+
   var treatId = req.params.id;
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
@@ -93,6 +94,30 @@ router.delete('/:id', function(req, res) {
   });
 });
 
+router.put('/:id', function(req, res){
+  treatID = req.params.id;
+  treat = req.body;
+  console.log("treat id to edit: ", treat);
+  pg.connect(connectionString, function(err, client, done){
+    if(err){
+        console.log('connection error: ', err);
+        res.sendStatus(500);
+    }
+    client.query(
+      'UPDATE treats SET name=$1, description=$2, pic=$3' +
+      ' WHERE id=$4',
+      //array of values to use in the query above
+      [treat.name, treat.description, treat.url, treatID ],
+      function(err, result){
+        if(err){
+          console.log('update error: ', err);
+          res.sendStatus(500);
+        } else {
+        }
+      });
 
+
+  });
+});
 
 module.exports = router;

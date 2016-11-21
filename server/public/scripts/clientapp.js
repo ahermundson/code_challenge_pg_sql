@@ -30,6 +30,8 @@ $(document).ready(function () {
 
 
   $('#treat-display').on('click', '.delete', deleteTreat);
+  $('#treat-display').on('click', '.edit', displayEditTreat);
+  $('#editButton').on('click', editTreat);
 
   /**---------- AJAX Functions ----------**/
 
@@ -140,22 +142,39 @@ $(document).ready(function () {
       }
     });
   }
+
+  var id;
+  function displayEditTreat() {
+    id = $(this).closest('.individual-treat').data('id');
+    console.log(id);
+    $('.edit-container').fadeIn('slow');
+  }
+
+  function editTreat() {
+    console.log('got to edit treat');
+    event.preventDefault();
+
+    var treateName = $('#treatNameInputEdit').val();
+    var treatDescription = $('#treatDescriptionInputEdit').val();
+    var treateURL = $('#treatUrlInputEdit').val();
+
+    var newTreat = {
+      name: treateName,
+      description: treatDescription,
+      url: treateURL
+    };
+    $.ajax({
+      type: 'PUT',
+      url: '/treats/' + id,
+      data: newTreat,
+      success: function(result){
+        clearDom();
+        getTreats();
+        $('.edit-container').fadeOut();
+      },
+      error: function(result) {
+        console.log("could not update treat.");
+      }
+    })
+  }
 });
-
-
-// function deleteTreat() {
-//   var id = $(this).closest('.individual-treat').data('id');
-//   console.log(id);
-//
-//   $.ajax({
-//     type: 'DELETE',
-//     url: '/treats/' + id,
-//     success: function(result) {
-//       //reappend tasks to DOM and show delete confirmation message
-//       getTreats();
-//     },
-//     error: function(result) {
-//       console.log('could not delete treat');
-//     }
-//   });
-// }

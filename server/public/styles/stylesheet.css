@@ -58,3 +58,12 @@ img {
   border-radius: 1em;
   padding: 2rem;
 }
+
+
+.edit-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  margin: 0 auto;
+  background-color: #F7E5C5;
+}
