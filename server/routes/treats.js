@@ -25,6 +25,28 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/:id', function(req, res) {
+  var treatId = req.params.id;
+  console.log("treat ID: ", treatId);
+  pg.connect(connectionString, function(err, client,done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+    client.query('SELECT * FROM treats WHERE name = $1',
+    [treatId],
+    function(err, result) {
+      done();
+      if (err) {
+        console.log('insert query error: ', err);
+        res.sendStatus(500);
+      }
+      res.send(result.rows);
+    });
+  });
+});
+
+
 router.post('/', function(req, res) {
   console.log('Got to treats post');
   var newTreat = req.body;
