@@ -168,6 +168,7 @@ $(document).ready(function () {
       url: '/treats/' + id,
       data: newTreat,
       success: function(result){
+        console.log('put successful');
         clearDom();
         getTreats();
         $('.edit-container').fadeOut();

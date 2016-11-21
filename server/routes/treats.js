@@ -113,6 +113,7 @@ router.put('/:id', function(req, res){
           console.log('update error: ', err);
           res.sendStatus(500);
         } else {
+          res.sendStatus(201);
         }
       });
 
