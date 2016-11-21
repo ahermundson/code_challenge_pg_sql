@@ -71,4 +71,28 @@ router.post('/', function(req, res) {
   });
 });
 
+
+router.delete('/:id', function(req, res) {
+  var treatId = req.params.id;
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+    client.query('DELETE FROM treats WHERE id = $1',
+    [treatId],
+    function(err, result) {
+      done(); //close connection
+      if(err) {
+        console.log('delete error');
+        res.sendStatus(500);
+      } else {
+        res.sendStatus(201);
+      }
+    });
+  });
+});
+
+
+
 module.exports = router;

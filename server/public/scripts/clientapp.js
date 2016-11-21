@@ -28,6 +28,9 @@ $(document).ready(function () {
     postTreat(newTreat);
   });
 
+
+  $('#treat-display').on('click', '.delete', deleteTreat);
+
   /**---------- AJAX Functions ----------**/
 
   // GET /treats
@@ -116,4 +119,43 @@ $(document).ready(function () {
 
     $('.treat:last-of-type').append($treat);
   }
+
+
+
+
+  function deleteTreat() {
+    var id = $(this).closest('.individual-treat').data('id');
+    console.log(id);
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/treats/' + id,
+      success: function(result) {
+        //reappend tasks to DOM and show delete confirmation message
+        clearDom();
+        getTreats();
+      },
+      error: function(result) {
+        console.log('could not delete treat');
+      }
+    });
+  }
 });
+
+
+// function deleteTreat() {
+//   var id = $(this).closest('.individual-treat').data('id');
+//   console.log(id);
+//
+//   $.ajax({
+//     type: 'DELETE',
+//     url: '/treats/' + id,
+//     success: function(result) {
+//       //reappend tasks to DOM and show delete confirmation message
+//       getTreats();
+//     },
+//     error: function(result) {
+//       console.log('could not delete treat');
+//     }
+//   });
+// }

@@ -43,9 +43,9 @@ img {
   color: white;
 }
 
-.toggle {
+/*.toggle {
   display: none;
-}
+}*/
 
 #modal {
   display: none; /* start not displayed */
